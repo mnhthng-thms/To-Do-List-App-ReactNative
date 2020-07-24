@@ -3,6 +3,14 @@ import * as R from 'rambda'
 
 const ANIMATION_DURATION = 1000
 
+/* 
+interface Task: {
+  id: Number, 
+  content: String
+  isActive: Boolean, 
+} 
+*/
+
 /* R.has :: k -> {k: v} -> Boolean */
 const isNotBlankRequest = (_, event) => 
   R.has('content')(event) && (event.content.length > 0) 

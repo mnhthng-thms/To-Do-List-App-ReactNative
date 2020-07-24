@@ -1,23 +1,23 @@
 import React from 'react'
 import { StyleSheet, View, Text, NativeModules } from 'react-native'
-import { BorderlessButton } from 'react-native-gesture-handler'
+import { BaseButton } from 'react-native-gesture-handler'
 import { AntDesign } from '@expo/vector-icons'
 
 import { colours } from '../styles/index'
 
 const FloatingPlusButton = ({ onPressed }) => {
   return (
-    <BorderlessButton
+    <BaseButton
       style={styles.iconContainer}
-      rippleColor={colours.redVenetian}
+      rippleColor={colours.white}
       onPress={onPressed}
     >
       <AntDesign
         name='plus'
-        size={36}
+        size={32}
         color={colours.white}
       />
-    </BorderlessButton>
+    </BaseButton>
   )
 }
 
@@ -30,8 +30,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
-    height: 65,
-    width: 65,
+    height: 48,
+    width: 48,
+    zIndex: 3,
+    elevation: 15,
   }
 })
 

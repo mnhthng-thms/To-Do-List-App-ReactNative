@@ -1,6 +1,6 @@
 import React, { useRef, createRef } from 'react'
 import { Animated, StyleSheet, Text, View } from 'react-native'
-import { juxt } from 'rambda'
+import { juxt } from 'ramda'
 import { RectButton } from 'react-native-gesture-handler'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 
@@ -33,7 +33,7 @@ const SwipeableTask = (props) => {
     const trans = dragX.interpolate({
       inputRange: [0, 60, 120],
       outputRange: [-2, 0, 1],
-      extrapolate: 'clamp'
+      
     })
     return (
       <Animated.View
@@ -140,7 +140,7 @@ const SwipeableTask = (props) => {
   return (
     <Swipeable
       ref={updateRef}
-      friction={2}
+      friction={1}
       leftThreshold={15}
       rightThreshold={10}
       renderLeftActions={renderLeftActions}
