@@ -1,51 +1,55 @@
 import React from 'react'
-import { Ionicons } from '@expo/vector-icons'
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { Ionicons } from '@expo/vector-icons'
+
 import { colours } from '../styles/index'
-import { MainScreen, CompletedTasks, ActiveTasks } from '../screens/index'
+import StackNavigator from './StackNavigator'
+import { CompletedTasks, ActiveTasks } from '../screens/index'
 
-const Tab = createBottomTabNavigator()
-
-const constructIcon = (route) => ({ focused, color, size }) => {
-  const iconName = (() => {
-    switch (route.name) {
-      case 'Completed Tasks': 
-        return focused ? 'md-checkmark-circle' : 'md-checkmark-circle-outline'
-      case 'Active Tasks': 
-        return focused ? 'ios-list-box' : 'ios-list'
-      case 'Main': 
-        return 'md-home' 
-    }
-  })()
-
-  return <Ionicons name={iconName} size={size} color={color} />
-}
+const Tab = createMaterialBottomTabNavigator()
 
 const TabbedNavigator = () => {
   return (
     <Tab.Navigator
-      tabBarOptions={{
-        activeTintColor: colours.purple1, 
-        inactiveTintColor: colours.lavenderLight
-      }}
-      screenOptions={ ({ route }) => ({
+      initialRouteName='Main'
+      activeColor={colours.purple1}
+      inactiveColor={colours.lavenderLight}
+      screenOptions={({ route }) => ({
         tabBarIcon: constructIcon(route)
       })}
     >
-      <Tab.Screen 
-        name='Main' 
-        component={MainScreen}
-      />
-      <Tab.Screen 
-        name='Completed Tasks' 
+      <Tab.Screen
+        name='Completed Tasks'
         component={CompletedTasks}
       />
-      <Tab.Screen 
-        name='Active Tasks' 
+      {/* Stack Navigator is nested inside this Tabbed Navigator,
+          which serves as the primary navigator for the whole project */}
+      <Tab.Screen
+        name='Main'
+        component={StackNavigator}
+      />
+      <Tab.Screen
+        name='Active Tasks'
         component={ActiveTasks}
       />
-    </Tab.Navigator>  
+    </Tab.Navigator>
   )
+}
+
+const constructIcon = (route) => ({ focused, color, size = 22 }) => {
+  const iconName = (() => {
+    switch (route.name) {
+      case 'Completed Tasks':
+        return focused ? 'md-checkmark-circle' : 'md-checkmark-circle-outline'
+      case 'Active Tasks':
+        return focused ? 'ios-list-box' : 'ios-list'
+      case 'Main':
+        return 'md-home'
+    }
+  })()
+
+  return <Ionicons name={iconName} size={size} color={color} />
 }
 
 export default TabbedNavigator

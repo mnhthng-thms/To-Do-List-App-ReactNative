@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import * as dt from '../utils/datetime'
+import { colours } from '../styles/index'
 
 const TaskDetails = ({ route, navigation }) => {
   const { task } = route.params

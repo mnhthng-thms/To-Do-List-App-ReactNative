@@ -1,8 +1,10 @@
 import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import { enableScreens } from 'react-native-screens'
+import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { MainScreen, TaskDetails } from '../screens/index'
 
-const Stack = createStackNavigator()
+enableScreens()
+const Stack = createNativeStackNavigator()
 
 const StackNavigator = () => {
   return (
@@ -10,7 +12,9 @@ const StackNavigator = () => {
       <Stack.Screen 
         name='All Tasks' 
         component={MainScreen}
-        headerShown={false}
+        options={{
+          headerShown: false
+        }}
       />
       <Stack.Screen 
         name='Task Details' 
