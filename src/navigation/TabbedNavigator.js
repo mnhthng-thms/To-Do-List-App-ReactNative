@@ -1,6 +1,5 @@
 import React from 'react'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons } from '@expo/vector-icons'
 
 import { colours } from '../styles/index'
@@ -13,26 +12,30 @@ const TabbedNavigator = () => {
   return (
     <Tab.Navigator
       initialRouteName='Main'
-      activeColor={colours.purple1}
+      activeColor={colours.white}
       inactiveColor={colours.lavenderLight}
+      barStyle={{
+        backgroundColor: colours.purple1
+      }}
       screenOptions={({ route }) => ({
         tabBarIcon: constructIcon(route)
       })}
     >
       <Tab.Screen
         name='Completed Tasks'
-        component={CompletedTasks}
-      />
-      {/* Stack Navigator is nested inside this Tabbed Navigator,
-          which serves as the primary navigator for the whole project */}
+      >
+        {() => <CompletedTasks/>}
+      </Tab.Screen>
       <Tab.Screen
         name='Main'
-        component={StackNavigator}
-      />
+      >
+        {() => <StackNavigator/>}
+      </Tab.Screen>
       <Tab.Screen
         name='Active Tasks'
-        component={ActiveTasks}
-      />
+      >
+        {() => <ActiveTasks/>}
+      </Tab.Screen>
     </Tab.Navigator>
   )
 }
