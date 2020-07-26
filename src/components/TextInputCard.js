@@ -11,7 +11,7 @@ const TextInputCard = ({ onSubmitted }) => {
         placeholder='Type new to-do task...'
         value={content}
         onChangeText={setContent}
-        onSubmitEditing={event => onSubmitted(event.nativeEvent.text)} 
+        onSubmitEditing={() => onSubmitted(content)} 
       />
     </View>
   )

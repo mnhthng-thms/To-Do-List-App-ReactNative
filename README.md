@@ -4,6 +4,8 @@
 
 ## Screenshots
 
+## Recorded Issues
+
 ## Legal
 
 This source code is licensed under [MIT License](https://github.com/mnhthng-thms/). Copyright © 2020 [MinhTu Thomas Hoang](https://github.com/mnhthng-thms).
