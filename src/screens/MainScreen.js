@@ -7,6 +7,7 @@ import { Divider } from 'react-native-paper'
 
 import TaskCard from '../components/TaskCard'
 import TextInputCard from '../components/TextInputCard'
+import ListEmpty from '../components/ListEmpty'
 import { colours } from '../styles/index'
 import { normalise } from '../helpers/Constants'
 
@@ -31,6 +32,7 @@ const MainScreen = ({ service }) => {
         />
         <FlatList
           data={state.context.tasks}
+          ListEmptyComponent={() => <ListEmpty />}
           ItemSeparatorComponent={() => (<Divider />)}
           renderItem={
             ({ item }) => (
