@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 
-const ActiveTasks = () => {
+const ActiveTasks = ({ service }) => {
   return (
     <View style={styles.container}>
       <Text>

@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, createRef } from 'react'
 import { StyleSheet, View, TextInput } from 'react-native'
 import { colours } from '../styles/index'
 
-const TextInputCard = function () {
+const TextInputCard = ({ onSubmitted }) => {
   const [ content, setContent ] = useState('')
 
   return (
     <View style={styles.container}>
       <TextInput
-        placeholder='New To-Do Task'
+        placeholder='Type new to-do task...'
         value={content}
-        onChange={text => setContent(text)}
+        onChangeText={setContent}
+        onSubmitEditing={event => onSubmitted(event.nativeEvent.text)} 
       />
     </View>
   )
@@ -18,10 +19,12 @@ const TextInputCard = function () {
 
 const styles = StyleSheet.create({
   container: {
+    margin: 1+'%',
     borderWidth: 3,
     borderColor: colours.purple1,
     borderRadius: 1,
     backgroundColor: colours.white,
+    elevation: 3,
   },
 })
 

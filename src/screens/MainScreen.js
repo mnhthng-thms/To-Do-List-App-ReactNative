@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, KeyboardAvoidingView, View } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import { FlatList } from 'react-native-gesture-handler'
 import { Divider } from 'react-native-paper'
 
@@ -52,33 +53,39 @@ const DATA = [
   },
 ]
 
-const MainScreen = ({ navigation }) => {
-  const [shouldUpdate, setShouldUpdate] = useState(false)
+const MainScreen = ({ service }) => {
+  const navigation = useNavigation()
+  const _sendNewTask = (content) => {
+    /* content :: string */
+    service.send('GET_NEW_TASK', { id: Date.now(), content: content })
+  }
 
-  return (
-    <View
-      enabled
-      behavior='padding'
-      style={styles.container}
-    >
-      <FlatList
-        data={DATA}
-        ItemSeparatorComponent={() => (<Divider />)}
-        ListFooterComponent={() => (<TextInputCard/>)}
-        renderItem={
-          ({ item }) => (<TaskCard item={item} />)
-        }
-        keyExtractor={
-          (_) => String(Math.floor(Math.random() * 100000))
-        }
-        keyboardDismissMode='none'
-        extraData={shouldUpdate}
-      />
-      <FloatingPlusButton />
-    </View>
-  )
+  try {
+    console.log(service.state.context)
 
-  // on a list item click: navigator.navigate('Task Details', { task: TaskObj })
+    return (
+      <View
+        style={styles.container}
+      >
+        <TextInputCard
+          onSubmitted={t => _sendNewTask(t)}
+        />
+        <FlatList
+          data={DATA}
+          ItemSeparatorComponent={() => (<Divider />)}
+          renderItem={
+            ({ item }) => (<TaskCard item={item} />)
+          }
+          keyExtractor={
+            (_) => String(Math.floor(Math.random() * 100000))
+          }
+        />
+        <FloatingPlusButton />
+      </View>
+    )
+  } catch (e) {
+    console.log('Bug caught while rendering MainScreen')
+  }
 }
 
 const styles = StyleSheet.create({

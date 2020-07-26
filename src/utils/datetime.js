@@ -25,6 +25,9 @@ const toString = (timestamp) => {
   ].join(' ')
 }
 
+const now = Date.now
+
 const datetime = {
-  toString
+  toString,
+  now
 }

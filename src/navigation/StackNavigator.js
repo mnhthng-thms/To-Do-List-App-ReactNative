@@ -6,16 +6,17 @@ import { MainScreen, TaskDetails } from '../screens/index'
 enableScreens()
 const Stack = createNativeStackNavigator()
 
-const StackNavigator = () => {
+const StackNavigator = ({ service }) => {
   return (
     <Stack.Navigator>
       <Stack.Screen 
         name='All Tasks' 
-        component={MainScreen}
         options={{
           headerShown: false
         }}
-      />
+      >
+        {() => <MainScreen service={service}/>}
+      </Stack.Screen>
       <Stack.Screen 
         name='Task Details' 
         component={TaskDetails}

@@ -8,7 +8,7 @@ import { CompletedTasks, ActiveTasks } from '../screens/index'
 
 const Tab = createMaterialBottomTabNavigator()
 
-const TabbedNavigator = () => {
+const TabbedNavigator = ({ service }) => {
   return (
     <Tab.Navigator
       initialRouteName='Main'
@@ -24,17 +24,17 @@ const TabbedNavigator = () => {
       <Tab.Screen
         name='Completed Tasks'
       >
-        {() => <CompletedTasks/>}
+        {() => <CompletedTasks service={service}/>}
       </Tab.Screen>
       <Tab.Screen
         name='Main'
       >
-        {() => <StackNavigator/>}
+        {() => <StackNavigator service={service}/>}
       </Tab.Screen>
       <Tab.Screen
         name='Active Tasks'
       >
-        {() => <ActiveTasks/>}
+        {() => <ActiveTasks service={service}/>}
       </Tab.Screen>
     </Tab.Navigator>
   )

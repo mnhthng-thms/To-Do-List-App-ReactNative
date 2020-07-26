@@ -1,76 +1,7 @@
 import { Machine, assign } from 'xstate'
-import * as R from 'rambda'
+import * as R from 'ramda'
 
 const ANIMATION_DURATION = 1000
-
-const AppMachine = Machine(
-  {
-    id: 'ToDoApp',
-    context: {
-      tasks: [],
-    }, 
-    initial: 'NORMAL',
-    states: {
-      NORMAL: {
-        on: {
-          GET_NEW_TASK: {
-            target: 'NEW_TASK_ADDED', 
-            actions: ['AddTask'],
-            cond: 'isNotBlankRequest'
-          },
-          ACHIEVE_TASK: {
-            target: 'TASK_ARCHIVED',
-            actions: ['ArchiveTask'],  
-            cond: 'isTaskExisted'
-          }, 
-          DELETE_TASK: {
-            target: 'TASK_DELETED', 
-            actions: ['DeleteTask'], 
-            cond: 'isTaskExisted'
-          }
-        }
-      }, 
-      NEW_TASK_ADDED: {
-        /* this transition time will prevent the cases in which user 
-           sends duplicated requests
-        */
-        after: {
-          TRANSITION_TIME: 'NORMAL' 
-        }
-      },
-      TASK_ARCHIVED: {
-        after: {
-          TRANSITION_TIME: 'NORMAL'
-        }
-      },
-      TASK_DELETED: {
-        after: {
-          TRANSITION_TIME: 'NORMAL'
-        }
-      }
-    }
-  }, 
-  {
-    actions: {
-      AddTask: assign({
-        tasks: assignNewTask
-      }), 
-      ArchiveTask: assign({
-        tasks: archiveTask,
-      }),
-      DeleteTask: assign({
-        tasks: purgeTask
-      })
-    },
-    guards: {
-      isNotBlankRequest: isNotBlankRequest,
-      isTaskExisted: isTaskExisted
-    }, 
-    delays: {
-      TRANSITION_TIME: ANIMATION_DURATION
-    }
-  }
-)
 
 /* 
 interface Task: {
@@ -155,5 +86,74 @@ const _taskStrategies = (query) => (context, event) => {
 
 const archiveTask = _taskStrategies(0)   
 const purgeTask = _taskStrategies(1)
+
+const AppMachine = Machine(
+  {
+    id: 'ToDoApp',
+    context: {
+      tasks: [],
+    }, 
+    initial: 'NORMAL',
+    states: {
+      NORMAL: {
+        on: {
+          GET_NEW_TASK: {
+            target: 'NEW_TASK_ADDED', 
+            actions: ['AddTask'],
+            cond: 'isNotBlankRequest'
+          },
+          ACHIEVE_TASK: {
+            target: 'TASK_ARCHIVED',
+            actions: ['ArchiveTask'],  
+            cond: 'isTaskExisted'
+          }, 
+          DELETE_TASK: {
+            target: 'TASK_DELETED', 
+            actions: ['DeleteTask'], 
+            cond: 'isTaskExisted'
+          }
+        }
+      }, 
+      NEW_TASK_ADDED: {
+        /* this transition time will prevent the cases in which user 
+           sends duplicated requests
+        */
+        after: {
+          TRANSITION_TIME: 'NORMAL' 
+        }
+      },
+      TASK_ARCHIVED: {
+        after: {
+          TRANSITION_TIME: 'NORMAL'
+        }
+      },
+      TASK_DELETED: {
+        after: {
+          TRANSITION_TIME: 'NORMAL'
+        }
+      }
+    }
+  }, 
+  {
+    actions: {
+      AddTask: assign({
+        tasks: assignNewTask
+      }), 
+      ArchiveTask: assign({
+        tasks: archiveTask,
+      }),
+      DeleteTask: assign({
+        tasks: purgeTask
+      })
+    },
+    guards: {
+      isNotBlankRequest: isNotBlankRequest,
+      isTaskExisted: isTaskExisted
+    }, 
+    delays: {
+      TRANSITION_TIME: ANIMATION_DURATION
+    }
+  }
+)
 
 export default AppMachine

@@ -2,9 +2,9 @@ import React from 'react'
 import { NavigationContainer as RNNavContainer } from '@react-navigation/native'
 import TabbedNavigator from './TabbedNavigator'
 
-const NavigationContainer = () => (
+const NavigationContainer = ({ service }) => (
   <RNNavContainer>
-    <TabbedNavigator/>
+    <TabbedNavigator service={service}/>
   </RNNavContainer>
 )
 
