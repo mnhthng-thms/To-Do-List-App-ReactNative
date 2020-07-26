@@ -1,12 +1,22 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import { useService } from '@xstate/react'
+
+import { colours } from '../styles/index'
+import TaskCardList from '../components/TaskCardList'
 
 const CompletedTasks = ({ service }) => {
+  const [state, send] = useService(service)
+
   return (
-    <View style={styles.container}>
-      <Text>
-        Bootstrapping Completed Tasks Screen
-      </Text>
+    <View
+      style={styles.container}
+    >
+      <TaskCardList
+        serviceState={state}
+        serviceSend={send}
+        dataFilterer={task => !(task.isActive)}
+      />
     </View>
   )
 }
@@ -14,10 +24,8 @@ const CompletedTasks = ({ service }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: colours.white,
   }
 })
-
 
 export default CompletedTasks

@@ -7,6 +7,7 @@
 ## Recorded Issues
 
 ## Plan for Improvement
+- [ ] Add `Stack Navigator` for `Completed Tasks` and `Active Tasks` screen so that user can navigate to Task Cards's respective `Tasks Details` screens from these mentioned screens. 
 
 ## Legal
 

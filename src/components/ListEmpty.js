@@ -22,10 +22,10 @@ const ListEmpty = (props) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,    
     width: SCREEN_WIDTH * 0.98, 
-    height: SCREEN_HEIGHT * 0.76,
+    height: SCREEN_HEIGHT * 0.9,
     marginHorizontal: SCREEN_WIDTH * 0.01,
-    flexDirection: 'column',
   },
   background: {
     flex: 1, 
