@@ -16,18 +16,20 @@ const toTimeInfo = (timestamp) => {
   }
 }
 
-const toString = (timestamp) => {
-  ({ weekday, date, month, year, hour, minute, second } = toTimeInfo(timestamp))
+const toString = (timestamp, query) => {
+  const { weekday, date, month, year, hour, minute, second } = toTimeInfo(timestamp)
   const normalise = x => (x < 10) ? `0${x}` : `${x}`
-  return [
-    `${normalise(hour)}:${normalise(minute)}:${normalise(second)}`, 
-    `${weekday},${normalise(date)}/${month}/${year}`
-  ].join(' ')
+  const _date = `${weekday},${normalise(date)}/${month}/${year}`
+  const _time = `${normalise(hour)}:${normalise(minute)}:${normalise(second)}`
+  
+  if (query === 'time') return _time 
+  if (query === 'date') return _date
+  return `${_time} ${_date}`
 }
 
 const now = Date.now
 
-const datetime = {
+export {
   toString,
   now
 }

@@ -13,7 +13,7 @@ const TabbedNavigator = ({ service }) => {
     <Tab.Navigator
       initialRouteName='Main'
       activeColor={colours.white}
-      inactiveColor={colours.lavenderLight}
+      inactiveColor={colours.sapphire}
       barStyle={{
         backgroundColor: colours.purple1
       }}

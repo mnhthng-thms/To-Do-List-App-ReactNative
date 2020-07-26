@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { StyleSheet, KeyboardAvoidingView, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { useService } from '@xstate/react'
 import { FlatList } from 'react-native-gesture-handler'
 import { Divider } from 'react-native-paper'
 
-import FloatingPlusButton from '../components/FloatingPlusButton'
 import TaskCard from '../components/TaskCard'
 import TextInputCard from '../components/TextInputCard'
 import { colours } from '../styles/index'
@@ -55,13 +55,15 @@ const DATA = [
 
 const MainScreen = ({ service }) => {
   const navigation = useNavigation()
+  const [state, send] = useService(service)
+
   const _sendNewTask = (content) => {
     /* content :: string */
-    service.send('GET_NEW_TASK', { id: Date.now(), content: content })
+    send('GET_NEW_TASK', { id: Date.now(), content: content })
   }
-
   try {
-    console.log(service.state.context)
+    console.log(`18: 06`)
+    console.log(state.context.tasks)
 
     return (
       <View
@@ -71,16 +73,21 @@ const MainScreen = ({ service }) => {
           onSubmitted={t => _sendNewTask(t)}
         />
         <FlatList
-          data={DATA}
+          data={state.context.tasks}
           ItemSeparatorComponent={() => (<Divider />)}
           renderItem={
-            ({ item }) => (<TaskCard item={item} />)
+            ({ item }) => (
+              <TaskCard 
+                item={item} 
+                onDeleted={() => send('DELETE_TASK', { id: item.id })}
+                onMarked={() => send('ACHIEVE_TASK', { id: item.id })}
+              />
+            )
           }
           keyExtractor={
             (_) => String(Math.floor(Math.random() * 100000))
           }
         />
-        <FloatingPlusButton />
       </View>
     )
   } catch (e) {

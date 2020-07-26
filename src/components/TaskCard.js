@@ -1,30 +1,38 @@
 import React from 'react'
 import { StyleSheet, Text } from 'react-native'
 import { RectButton } from 'react-native-gesture-handler'
+
 import { colours } from '../styles/index'
 import { normalise } from '../helpers/Constants'
+import * as dt from '../utils/datetime'
 import SwipeableTask from './SwipeableTask'
 
 
-const TaskCard = ({ item }) => {
-  const { content, date } = item
+const TaskCard = ({ item, onMore, onMarked, onDeleted }) => {
+  const { content, id, isActive } = item
 
   return (
     <SwipeableTask
-      onMore={() => alert('details')}
-      onMarked={() => alert('done with this shit')}
-      onDeleted={() => alert('oops, what task?')}
+      hasRightActions={isActive}
+      onMore={onMore}
+      onMarked={onMarked}
+      onDeleted={onDeleted}
     >
       <RectButton style={styles.container}>
         <Text 
           numberOfLines={2}
           ellipsizeMode='tail'
-          style={styles.contentTxt}
+          style={[
+            styles.contentTxt,
+            isActive ? 
+              { color: colours.greenZelyony } :
+              { color: colours.toryBlue } 
+          ]}
         >
           {content}
         </Text>
         <Text style={styles.dateTxt}>
-          {date} &gt;
+          {dt.toString(id, 'date')} &gt;
         </Text>
       </RectButton>
     </SwipeableTask>
@@ -53,7 +61,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 2+'%',
     top: 0,
-    color: '#202020',
     fontWeight: 'bold',
     backgroundColor: 'transparent',
   }

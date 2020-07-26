@@ -6,6 +6,10 @@
 
 ## Recorded Issues
 
+## Plan for Improvement
+
+- [] apply `lensWhere` on implementation of `archieveTask` function in `AppMachine.js`?
+
 ## Legal
 
 This source code is licensed under [MIT License](https://github.com/mnhthng-thms/). Copyright © 2020 [MinhTu Thomas Hoang](https://github.com/mnhthng-thms).

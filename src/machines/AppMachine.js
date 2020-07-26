@@ -45,47 +45,49 @@ const assignNewTask = (context, event) => {
   return R.append (newTask) (tasks)
 }
 
-const _taskStrategies = (query) => (context, event) => {
-  const idEvent = R.prop ('id') (event)
+const purgeTask = (context, event) => {
   const tasks = R.prop ('tasks') (context)
-  
-  const queryObj = (query === 0) ? 
-    { id: idEvent, isActive: true } :
-    { id: idEvent } 
-  
-  /* modifyActiveProp :: {...isActive: any } -> { ...isActive: false }
-     doObjsEquals     :: Object -> Boolean 
-        # check if given object equals `queryObj`
-  */
-  const modifyActiveProp = R.assoc ('isActive', false)
-  const doObjsEquals = R.whereEq (queryObj)
 
-  /* R.findIndex :: (a -> Boolean) -> [a] -> ?Number
-        # return index (if exists) in the given array of 
-        # the first element satisfying the given predicate  
-     R.reject :: (a -> Boolean) -> [a] -> [a]
+  /* R.reject :: (a -> Boolean) -> [a] -> [a]
         # the complement of `filter`, which return the array in which
-        # the elements satifying the given predicate are left out
-     R.juxt :: [(a, b, …, m) -> n] -> ((a, b, …, m) -> [n])
-        # applies a list of function to a list of values
-        # read more at: https://ramdajs.com/docs/#juxt
+        # the elements satifying the given predicate are left out 
+     R.eqProps :: k -> {k: v} -> {k: v} -> Boolean
+        # reports whether two objects have the same value  
+        # for the specified property
   */
-  const [taskId, filteredTasks] = R.juxt ([
-    R.findIndex, 
-    R.reject
-  ]) (doObjsEquals) (tasks)
-
-  /*  R.adjust :: Number -> (a -> a) -> [a] -> [a]
-         # applies a function to the value at the given index of an array, 
-         # returning a new copy of the array with the element at the given  
-         # index replaced with the result of the function application
-  */
-  if (query === 0) return R.adjust (taskId) (modifyActiveProp) (tasks)
-  if (query === 1) return filteredTasks
+  return R.reject (R.eqProps('id', event)) (tasks)
 }
 
-const archiveTask = _taskStrategies(0)   
-const purgeTask = _taskStrategies(1)
+const archiveTask = (context, event) => {
+  const idEvent = R.prop ('id') (event)
+  const tasks = R.prop ('tasks') (context)
+
+  const queryObj = { id: idEvent, isActive: true }
+  /* `modifiedActiveProp` :: {...isActive: any } -> { ...isActive: false } */
+  const modifiedActiveProp = R.assoc ('isActive', false)
+  /* `doObjsEquals` :: Object -> Boolean 
+        # check if given object equals `queryObj` 
+  */
+  const doObjEqQuery = R.whereEq (queryObj)
+
+  /* @TODO:
+      if the item is the desired one, append its modified version to `acc`,
+      else: append itself to `acc`
+     @TRIVIA: 
+      `Array.prototype.concat` is applied instead of `R.append` because
+      the initial value fetched into this reducer is an empty array
+
+  */
+  const reducer = (acc, item) => doObjEqQuery(item) ? 
+    acc.concat(modifiedActiveProp(item)) : 
+    acc.concat(item)
+
+  return R.reduce(
+    reducer, 
+    [], 
+    tasks
+  )
+}   
 
 const AppMachine = Machine(
   {
@@ -110,7 +112,6 @@ const AppMachine = Machine(
           DELETE_TASK: {
             target: 'TASK_DELETED', 
             actions: ['DeleteTask'], 
-            cond: 'isTaskExisted'
           }
         }
       }, 

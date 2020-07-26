@@ -9,7 +9,7 @@ import  { AntDesign, MaterialIcons } from '@expo/vector-icons'
 import colours from '../styles/colours'
 
 const SwipeableTask = (props) => {
-  const { children, onMore, onMarked, onDeleted } = props
+  const { children, onMore, onMarked, onDeleted, hasRightActions } = props
   /* to persist the reference to a component instance 
      throughout its lifecycle
   */
@@ -144,7 +144,7 @@ const SwipeableTask = (props) => {
       leftThreshold={15}
       rightThreshold={10}
       renderLeftActions={renderLeftActions}
-      renderRightActions={renderRightActions}
+      { ...hasRightActions && {renderRightActions: renderRightActions}}
     >
       {children}
     </Swipeable>
@@ -153,6 +153,7 @@ const SwipeableTask = (props) => {
 
 /*
   <SwipeableTask
+    hasRightActions
     onMore={() => / navigate to the respective Details screen /}
     onMarked={() => / send ACHIEVE_TASK message to the app machine /}
     onDeleted={() => / send DELETE_TASK message to the app machine /}
