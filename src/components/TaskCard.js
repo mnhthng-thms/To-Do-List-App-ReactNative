@@ -18,7 +18,10 @@ const TaskCard = ({ item, onMore, onMarked, onDeleted }) => {
       onMarked={onMarked}
       onDeleted={onDeleted}
     >
-      <RectButton style={styles.container}>
+      <RectButton 
+        style={styles.container}
+        onPress={onMore}
+      >
         <Text 
           numberOfLines={2}
           ellipsizeMode='tail'
