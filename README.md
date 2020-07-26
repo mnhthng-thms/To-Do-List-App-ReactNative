@@ -1,10 +1,12 @@
 # To Do List App in React Native
 
-`[Still in Progress]`
+A *To-Do List React Native Application* using [`react-navigation`](https://github.com/react-navigation/react-navigation), [`react-native-gesture-handler`](https://github.com/software-mansion/react-native-gesture-handler), [`XState`](https://xstate.js.org/docs/).
+
+Code submission for the 4th week's assignment of the 2020 React Native course organised by *Facebook Developers' Circle Hanoi*.
 
 ## Screenshots
 
-## Recorded Issues
+<img alt='screencast' src='./public/screencast.gif' width=30% height=30% />
 
 ## Plan for Improvement
 - [ ] Add `Stack Navigator` for `Completed Tasks` and `Active Tasks` screen so that user can navigate to Task Cards's respective `Tasks Details` screens from these mentioned screens. 
