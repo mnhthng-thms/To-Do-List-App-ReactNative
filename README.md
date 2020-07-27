@@ -9,7 +9,7 @@ Code submission for the 4th week's assignment of the 2020 React Native course or
 <img alt='screencast' src='./public/screencast.gif' width=30% height=30% />
 
 ## Plan for Improvement
-- [ ] Add `Stack Navigator` for `Completed Tasks` and `Active Tasks` screen so that user can navigate to Task Cards's respective `Tasks Details` screens from these mentioned screens. 
+- [ ] iOS app development
 
 ## Legal
 
