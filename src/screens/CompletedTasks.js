@@ -1,11 +1,13 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useService } from '@xstate/react'
+import { useNavigation } from '@react-navigation/native'
 
 import { colours } from '../styles/index'
 import TaskCardList from '../components/TaskCardList'
 
 const CompletedTasks = ({ service }) => {
+  const navigation = useNavigation()
   const [state, send] = useService(service)
 
   return (
@@ -13,6 +15,7 @@ const CompletedTasks = ({ service }) => {
       style={styles.container}
     >
       <TaskCardList
+        navigation={navigation}
         serviceState={state}
         serviceSend={send}
         dataFilterer={task => !(task.isActive)}

@@ -3,8 +3,11 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { Ionicons } from '@expo/vector-icons'
 
 import { colours } from '../styles/index'
-import StackNavigator from './StackNavigator'
-import { CompletedTasks, ActiveTasks } from '../screens/index'
+import { 
+  HomeStackNavigator, 
+  ActiveStackNavigator, 
+  CompletedStackNavigator 
+} from './StackNavigators'
 
 const Tab = createMaterialBottomTabNavigator()
 
@@ -24,17 +27,17 @@ const TabbedNavigator = ({ service }) => {
       <Tab.Screen
         name='Completed Tasks'
       >
-        {() => <CompletedTasks service={service}/>}
+        {() => <CompletedStackNavigator service={service}/>}
       </Tab.Screen>
       <Tab.Screen
         name='Main'
       >
-        {() => <StackNavigator service={service}/>}
+        {() => <HomeStackNavigator service={service}/>}
       </Tab.Screen>
       <Tab.Screen
         name='Active Tasks'
       >
-        {() => <ActiveTasks service={service}/>}
+        {() => <ActiveStackNavigator service={service}/>}
       </Tab.Screen>
     </Tab.Navigator>
   )
